@@ -1,21 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Thuongmaidientu.Models;
+using Thuongmaidientu.Repositories.IRepository;
 
 namespace Thuongmaidientu.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepository _productRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository)
         {
             _logger = logger;
+            _productRepository = productRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var product = await _productRepository.GetAllAsync();
+            return View(product);
         }
 
         public IActionResult Privacy()

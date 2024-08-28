@@ -46,6 +46,14 @@ namespace Thuongmaidientu
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                  name: "user",
+                  pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}"
+                );
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
                   name: "areas",
                   pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
             });

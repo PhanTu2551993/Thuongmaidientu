@@ -38,8 +38,10 @@ namespace Thuongmaidientu.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Category category)
         {
+      
             if (ModelState.IsValid)
             {
+                category.Status = true;
                 _categoryRepository.AddAsync(category);
                 return RedirectToAction(nameof(Index));
             }

@@ -115,6 +115,17 @@ namespace Thuongmaidientu.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    var roles = await _signInManager.UserManager.GetRolesAsync(user);
+                    // Kiểm tra vai trò và điều hướng
+                    if (roles.Contains("ADMIN"))
+                    {
+                        return RedirectToAction("Index", "CategoryManager", new { area = "Admin" });
+                    }
+                    else if (roles.Contains("USER"))
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Default" });
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

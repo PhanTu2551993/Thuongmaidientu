@@ -8,7 +8,8 @@
 @{
     ViewData["Title"] = "Add Product";
 }
-<h2>Add Product</h2>
+<h4 class="text-center">Add Product</h4>
+<div class="d-flex justify-content-center text-center">
 <form asp-action="Add" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="ProductName"></label>
@@ -19,6 +20,11 @@
         <label asp-for="Price"></label>
         <input asp-for="Price" class="form-control" />
         <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Stock"></label>
+        <input asp-for="Stock" class="form-control" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Description"></label>
@@ -38,3 +44,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
 </form>
+</div>

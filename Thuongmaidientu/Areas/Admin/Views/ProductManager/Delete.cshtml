@@ -5,8 +5,9 @@
 }
 @model Thuongmaidientu.Models.Product
 <h2>Delete Product</h2>
-<form asp-action="DeleteConfirmed" method="post">
-    <input type="hidden" asp-for="ProductId" />
+<form asp-action="DeleteConfirmed" asp-route-id="@Model.ProductId" method="post">
+    <input type="hidden" asp-for="@Model.ProductId" />
     <p>Are you sure you want to delete @Model.ProductName?</p>
     <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

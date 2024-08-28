@@ -29,7 +29,7 @@ namespace Thuongmaidientu.Areas.Admin.Controllers
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "CategoryName");
             return View();
         }
         // Xử lý thêm sản phẩm mới
@@ -46,15 +46,16 @@ namespace Thuongmaidientu.Areas.Admin.Controllers
                     product.ImageUrl = await SaveImage(imageUrl);
 
                 }
+                product.Status = true;
                 await _productRepository.AddAsync(product);
                 return RedirectToAction(nameof(Index));
             }
             // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "CategoryName");
             return View(product);
         }
-        // Viết thêm hàm SaveImage (tham khảo bài 02)
+        // Viết thêm hàm SaveImage
         private async Task<string> SaveImage(IFormFile image)
         {
             //Thay đổi đường dẫn theo cấu hình của bạn
@@ -104,7 +105,7 @@ namespace Thuongmaidientu.Areas.Admin.Controllers
                 return NotFound();
             }
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name",
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "CategoryName",
             product.CategoryId);
             return View(product);
         }
@@ -121,8 +122,7 @@ namespace Thuongmaidientu.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var existingProduct = await
-                _productRepository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
-                                                     // Giữ nguyên thông tin hình ảnh nếu không có hình mới được tải lên
+                _productRepository.GetByIdAsync(id); 
                 if (imageUrl == null)
                 {
                     product.ImageUrl = existingProduct.ImageUrl;
@@ -139,13 +139,15 @@ namespace Thuongmaidientu.Areas.Admin.Controllers
                 existingProduct.ProductName = product.ProductName;
                 existingProduct.Price = product.Price;
                 existingProduct.Description = product.Description;
+                existingProduct.Stock = product.Stock;
+                existingProduct.Status = product.Status;
                 existingProduct.CategoryId = product.CategoryId;
                 existingProduct.ImageUrl = product.ImageUrl;
                 await _productRepository.UpdateAsync(existingProduct);
                 return RedirectToAction(nameof(Index));
             }
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "CategoryName");
             return View(product);
         }
     }

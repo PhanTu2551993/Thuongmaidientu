@@ -12,8 +12,7 @@ namespace Thuongmaidientu.Models
 
         public int Stock { get; set; }
         public string Description { get; set; }
-        public bool Status { get; set; } = true;
-
+        public bool Status { get; set; }
         public string? ImageUrl { get; set; }
         public List<ProductImage>? Images { get; set; }
         public int CategoryId { get; set; }

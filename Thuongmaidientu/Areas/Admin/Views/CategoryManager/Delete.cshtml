@@ -5,8 +5,9 @@
 }
 @model Thuongmaidientu.Models.Category
 <h2>Delete Category</h2>
-<form asp-action="DeleteConfirmed" method="post">
-    <input type="hidden" asp-for="CategoryId" />
+<form asp-action="DeleteConfirmed" asp-route-id="@Model.CategoryId" method="post">
+    <input type="hidden" asp-for="@Model.CategoryId" />
     <p>Are you sure you want to delete @Model.CategoryName?</p>
     <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

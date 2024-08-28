@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+
+@{
+    ViewData["Title"] = "User List";
+}
+@section Styles {
+    <style>
+        th, td {
+            text-align: center
+        }
+
+        .short-id {
+            display: inline-block;
+            max-width: 10ch; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+
+}
+<h3 class="text-center">User List</h3>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td> <span class="short-id">@user.Id</span></td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-secondary">Edit</a> |
+
+                    @if (user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.UtcNow)
+                    {
+                 
+                        <a asp-action="UnlockAccount" asp-route-id="@user.Id" class="btn btn-success" title="Unlock">
+                            <i class="fas fa-lock-open"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="LockAccount" asp-route-id="@user.Id" class="btn btn-warning" title="Lock">
+                            <i class="fas fa-lock"></i>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

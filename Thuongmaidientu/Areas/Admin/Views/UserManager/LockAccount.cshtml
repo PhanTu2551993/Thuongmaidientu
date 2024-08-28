@@ -1,0 +1,12 @@
+﻿@model Thuongmaidientu.Models.Dto.LockAccountView
+
+<h2>Lock Account</h2>
+
+<form asp-action="LockAccountConfirmed" method="post">
+    <div class="form-group">
+        <label for="LockoutTime">Select Lockout Duration (days):</label>
+        <input type="number" class="form-control" id="LockoutTime" asp-for="LockoutTime" value="30" />
+    </div>
+    <input type="hidden" asp-for="UserId" />
+    <button type="submit" class="btn btn-warning">Lock Account</button>
+</form>
